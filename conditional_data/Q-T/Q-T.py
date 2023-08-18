@@ -22,13 +22,13 @@ class QT(datasets.GeneratorBasedBuilder):
         gdown.download_folder(url, output=data_dir, quiet=True, use_cookies=False)
         return [
             datasets.SplitGenerator(
-                name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "QT/test.jsonl")}
+                name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "test.jsonl")}
             ),
             datasets.SplitGenerator(
-                name=datasets.Split.VALIDATION, gen_kwargs={"filepath": os.path.join(data_dir, "QT/val.jsonl")}
+                name=datasets.Split.VALIDATION, gen_kwargs={"filepath": os.path.join(data_dir, "val.jsonl")}
             ),
             datasets.SplitGenerator(
-                name=datasets.Split.TRAIN, gen_kwargs={"filepath": os.path.join(data_dir, "QT/train.jsonl")}
+                name=datasets.Split.TRAIN, gen_kwargs={"filepath": os.path.join(data_dir, "train.jsonl")}
             ),
         ]
 
