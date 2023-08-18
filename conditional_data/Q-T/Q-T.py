@@ -1,6 +1,7 @@
 import json
 import datasets
 import os
+import gdown
 
 class QT(datasets.GeneratorBasedBuilder):
 
@@ -16,16 +17,18 @@ class QT(datasets.GeneratorBasedBuilder):
         )
 
     def _split_generators(self, dl_manager):
-        data_dir = './conditional_data/Q-T' 
+        data_dir = 'conditional_data/Q-T' 
+        url = 'https://drive.google.com/drive/folders/122YK0IElSnGZbPMigXrduTVL1geB4wEW'
+        gdown.download_folder(url, output=data_dir, quiet=True, use_cookies=False)
         return [
             datasets.SplitGenerator(
-                name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "test.jsonl")}
+                name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "QT/test.jsonl")}
             ),
             datasets.SplitGenerator(
-                name=datasets.Split.VALIDATION, gen_kwargs={"filepath": os.path.join(data_dir, "val.jsonl")}
+                name=datasets.Split.VALIDATION, gen_kwargs={"filepath": os.path.join(data_dir, "QT/val.jsonl")}
             ),
             datasets.SplitGenerator(
-                name=datasets.Split.TRAIN, gen_kwargs={"filepath": os.path.join(data_dir, "train.jsonl")}
+                name=datasets.Split.TRAIN, gen_kwargs={"filepath": os.path.join(data_dir, "QT/train.jsonl")}
             ),
         ]
 
