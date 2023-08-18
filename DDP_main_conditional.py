@@ -65,6 +65,7 @@ if __name__ == '__main__':
 
     if dist.get_rank() == 0:
         log_dir = './logs'
+        os.makedirs(log_dir, exist_ok=True)
         fitlog.set_log_dir(log_dir)
         fitlog.commit(__file__)
         fitlog.add_hyper(args)
