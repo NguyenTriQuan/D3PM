@@ -335,7 +335,7 @@ class MaskDiffusion(DiscreteDiffusionMatrixBase):
         self._loss_history = np.zeros(
             [self.num_steps, history_per_term], dtype=np.float64
         )
-        self._loss_counts = np.zeros([self.num_steps], dtype=np.int)
+        self._loss_counts = np.zeros([self.num_steps], dtype=np.int64)
 
         import math
         self.word_freq_lambda = word_freq_lambda * torch.sin(torch.arange(schedule.num_steps + 1, device=device) / schedule.num_steps * math.pi)
