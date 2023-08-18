@@ -5,7 +5,7 @@ import random
 import numpy as np
 import argparse
 import torch
-import fitlog
+# import fitlog
 from dataloader import QQPLoader, QTLoader
 from transformers import BertTokenizer, BertConfig, RobertaTokenizer, RobertaConfig
 from models.modeling_bert import BertForMaskedLM
@@ -63,13 +63,13 @@ if __name__ == '__main__':
     dist.init_process_group(backend='nccl', timeout=datetime.timedelta(seconds=9600))
     set_seed(args)
 
-    if dist.get_rank() == 0:
-        log_dir = './logs'
-        os.makedirs(log_dir, exist_ok=True)
-        fitlog.set_log_dir(log_dir)
-        fitlog.commit(__file__)
-        fitlog.add_hyper(args)
-        fitlog.add_hyper_in_file(__file__)
+    # if dist.get_rank() == 0:
+    #     log_dir = './logs'
+    #     os.makedirs(log_dir, exist_ok=True)
+    #     fitlog.set_log_dir(log_dir)
+    #     fitlog.commit(__file__)
+    #     fitlog.add_hyper(args)
+    #     fitlog.add_hyper_in_file(__file__)
 
     Dataloaders = {
         'qqp': QQPLoader,
@@ -238,7 +238,7 @@ if __name__ == '__main__':
             if dist.get_rank() == 0:
                 if i % args.logging_steps == args.logging_steps - 1:
                     logger.info(f'Loss at step {i} is {train_loss / args.logging_steps}')
-                    fitlog.add_loss(train_loss / args.logging_steps, name='train_loss', step=i)
+                    # fitlog.add_loss(train_loss / args.logging_steps, name='train_loss', step=i)
 
                 train_loss = .0
             if i % args.eval_steps == args.eval_steps - 1:
@@ -284,10 +284,10 @@ if __name__ == '__main__':
                     if dist.get_rank() == 0:
                         for name in dev_metrics.keys():
                             dev_metrics[name] /= (len(dev_data) - nan_count_in_dev * 2 * args.batch_size)
-                            fitlog.add_metric(dev_metrics[name], name=name, step=i)
+                            # fitlog.add_metric(dev_metrics[name], name=name, step=i)
                         if dev_metrics['elbo_in_bits_per_dim'] <= best_dev_elbo:
                             best_dev_elbo = dev_metrics['elbo_in_bits_per_dim']
-                            fitlog.add_best_metric(dev_metrics['elbo_in_bits_per_dim'], name='dev_elbo_in_bits_per_dim')
+                            # fitlog.add_best_metric(dev_metrics['elbo_in_bits_per_dim'], name='dev_elbo_in_bits_per_dim')
                             torch.save({
                                 'model': model.state_dict(),
                                 'optimizer': optimizer.state_dict(),
