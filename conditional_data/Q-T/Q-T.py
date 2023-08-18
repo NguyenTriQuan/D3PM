@@ -16,7 +16,7 @@ class QT(datasets.GeneratorBasedBuilder):
         )
 
     def _split_generators(self, dl_manager):
-        data_dir = '/nvme/txsun/zfhe/conditional_data/Q-T'
+        data_dir = 'conditional_data/Q-T' 
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "test.jsonl")}
