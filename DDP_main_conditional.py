@@ -197,6 +197,7 @@ if __name__ == '__main__':
         train_loader.sampler.set_epoch(epoch)
         dev_loader.sampler.set_epoch(epoch)
         for batch in tqdm(train_loader):
+            print(batch)
             i += 1
             for k, v in batch.items():
                 batch[k] = v.to(device)
