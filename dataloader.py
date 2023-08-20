@@ -122,6 +122,17 @@ class QTLoader(ConditionalLoader):
         example['src'] = ' Answer: ' + example['src'] + ' Question: '
         example['trg'] = example['trg']
         return example
+    
+class D2CLoader(ConditionalLoader):
+    def __init__(self, tokenizer, return_source_length=False):
+        super(D2CLoader, self).__init__(tokenizer, return_source_length)
+        self.task_name = 'description2code'
+
+    @staticmethod
+    def add_prompt(example):
+        example['src'] = ' Description: ' + example['src'] + ' Code: '
+        example['trg'] = example['trg']
+        return example
 
 
 class WikiLoader(ConditionalLoader):

@@ -6,7 +6,7 @@ import numpy as np
 import argparse
 import torch
 # import fitlog
-from dataloader import QQPLoader, QTLoader
+from dataloader import QQPLoader, QTLoader, D2CLoader
 from transformers import BertTokenizer, BertConfig, RobertaTokenizer, RobertaConfig
 from models.modeling_bert import BertForMaskedLM
 from models.modeling_roberta import RobertaForMaskedLM
@@ -74,6 +74,7 @@ if __name__ == '__main__':
     Dataloaders = {
         'qqp': QQPLoader,
         'QT': QTLoader,
+        'D2C': D2CLoader
     }
 
     Loader = Dataloaders[args.task_name]
