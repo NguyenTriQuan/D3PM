@@ -4,11 +4,10 @@ import os
 import gdown
 import requests
 import tarfile
+import zipfile
+import urllib.request
+import dload
 
-def download_and_unzip(url, extract_to='.'):
-    response = requests.get(url, stream=True)
-    file = tarfile.open(fileobj=response.raw, mode="r|gz")
-    file.extractall(path=extract_to)
 
 class D2C(datasets.GeneratorBasedBuilder):
 
@@ -26,7 +25,7 @@ class D2C(datasets.GeneratorBasedBuilder):
     def _split_generators(self, dl_manager):
         data_dir = 'conditional_data/description2code' 
         url = 'https://www.dropbox.com/s/zwj6u4caehf54s0/description2code_current.zip'
-        download_and_unzip(url, data_dir)
+        dload.save_unzip(url, data_dir)
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "test.jsonl")}
