@@ -23,9 +23,15 @@ class D2C(datasets.GeneratorBasedBuilder):
         )
 
     def _split_generators(self, dl_manager):
-        data_dir = 'conditional_data/description2code' 
-        url = 'https://drive.google.com/drive/u/0/folders/1CNmq-ANr_FNw2o7Y-zSrFvQsSKX0CvGQ'
-        gdown.download_folder(url, output=data_dir, quiet=True, use_cookies=False)
+        output_file = 'conditional_data/description2code/description2code.zip' 
+        # url = 'https://drive.google.com/drive/u/0/folders/1CNmq-ANr_FNw2o7Y-zSrFvQsSKX0CvGQ'
+        url = 'https://drive.google.com/file/d/1UEqP1GpaIS2cSoVwKDezR2HqE3RUv-MT'
+        gdown.download(url, output_file, quiet=False)
+        with zipfile.ZipFile(output_file, 'r') as zip_ref:
+            # Extract all the contents to the destination folder
+            zip_ref.extractall('conditional_data/description2code')
+
+        print("File extracted successfully.")
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "test.jsonl")}
