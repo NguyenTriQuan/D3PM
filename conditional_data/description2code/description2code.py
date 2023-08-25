@@ -25,7 +25,7 @@ class D2C(datasets.GeneratorBasedBuilder):
     def _split_generators(self, dl_manager):
         output_file = 'conditional_data/description2code/description2code.zip' 
         # url = 'https://drive.google.com/drive/u/0/folders/1CNmq-ANr_FNw2o7Y-zSrFvQsSKX0CvGQ'
-        url = 'https://drive.google.com/file/d/1UEqP1GpaIS2cSoVwKDezR2HqE3RUv-MT'
+        url = 'https://drive.google.com/file/d/1UEqP1GpaIS2cSoVwKDezR2HqE3RUv-MT/view?usp=sharing'
         gdown.download(url, output_file, quiet=False)
         with zipfile.ZipFile(output_file, 'r') as zip_ref:
             # Extract all the contents to the destination folder
