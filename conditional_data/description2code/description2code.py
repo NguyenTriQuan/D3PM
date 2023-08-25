@@ -8,6 +8,22 @@ import zipfile
 import urllib.request
 import dload
 
+def download_and_unzip():
+    data_dir = 'conditional_data/description2code' 
+    url = 'https://drive.google.com/drive/folders/1CNmq-ANr_FNw2o7Y-zSrFvQsSKX0CvGQ'
+    gdown.download_folder(url, output=data_dir, quiet=True, use_cookies=False)
+    with zipfile.ZipFile('conditional_data/description2code/description2code_current.zip', 'r') as zip_ref:
+        # Extract all the contents to the destination folder
+        zip_ref.extractall('conditional_data/description2code')
+
+    print("File extracted successfully.")
+
+def extract_data():
+    data_dir = 'conditional_data/description2code/description2code_current/codeforces'
+    for file in os.listdir(data_dir):
+        print(file)
+
+
 
 class D2C(datasets.GeneratorBasedBuilder):
 
@@ -24,13 +40,8 @@ class D2C(datasets.GeneratorBasedBuilder):
 
     def _split_generators(self, dl_manager):
         data_dir = 'conditional_data/description2code' 
-        # url = 'https://drive.google.com/drive/folders/1CNmq-ANr_FNw2o7Y-zSrFvQsSKX0CvGQ'
-        # gdown.download_folder(url, output=data_dir, quiet=True, use_cookies=False)
-        with zipfile.ZipFile('conditional_data/description2code/description2code_current.zip', 'r') as zip_ref:
-            # Extract all the contents to the destination folder
-            zip_ref.extractall('conditional_data/description2code')
-
-        print("File extracted successfully.")
+        # download_and_unzip()
+        extract_data()
         return [
             datasets.SplitGenerator(
                 name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "test.jsonl")}
