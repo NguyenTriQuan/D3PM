@@ -94,7 +94,7 @@ if __name__ == '__main__':
     tokenizer = tok_cls.from_pretrained(args.model_name_or_path)
     word_freq = torch.zeros(tokenizer.vocab_size)
     assert word_freq.size(0) == tokenizer.vocab_size
-
+    train_data, dev_data = Loader(tokenizer=tokenizer).my_load(splits=['train', 'validation'])
 
     def word_freq_preprocess_fn(wf):
         wf = wf + 1
@@ -143,8 +143,6 @@ if __name__ == '__main__':
     model = DDP(model, device_ids=[local_rank], output_device=local_rank)
     optimizer = AdamW(model.parameters(), lr=args.lr)
     warmup_scheduler = torch.optim.lr_scheduler.LinearLR(optimizer, total_iters=10000)
-
-    train_data, dev_data = Loader(tokenizer=tokenizer).my_load(splits=['train', 'validation'])
 
     if dist.get_rank() == 0:
         logger = fastNLP.logger
