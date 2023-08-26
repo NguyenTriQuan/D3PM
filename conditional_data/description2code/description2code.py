@@ -25,7 +25,7 @@ def extract_data():
     trg_data = []
     for prob in os.listdir(data_dir):
         src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
-        with open(trg_dir + '/' + solution, 'r') as f:
+        with open(src_file, 'r') as f:
             src_data.append(f.read().strip())
 
         trg_dir = data_dir + '/' + prob + '/' + 'solutions_c++'
