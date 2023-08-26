@@ -21,27 +21,25 @@ def download_and_unzip():
 
 def extract_data():
     data_dir = 'conditional_data/description2code/description2code_current/codeforces'
-    src_data = []
-    trg_data = []
-    for prob in os.listdir(data_dir):
-        print(prob)
-        src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
-        src_exist = os.path.isfile(src_file)
-        trg_dir = data_dir + '/' + prob + '/' + 'solutions_python'
-        if os.path.isdir(trg_dir):
-            trg_count = len(os.listdir(trg_dir))
+    data = []
+    with open('conditional_data/description2code/description2code_current/codeforces/data.jsonl', 'w') as jsonl_file:
+        for prob in os.listdir(data_dir):
+            print(prob)
+            src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
+            src_exist = os.path.isfile(src_file)
+            trg_dir = data_dir + '/' + prob + '/' + 'solutions_python'
+            if os.path.isdir(trg_dir):
+                trg_count = len(os.listdir(trg_dir))
 
-        if src_exist and trg_count > 0:
-            with open(src_file, 'r') as f:
-                src_data.append(f.read().strip())
+            if src_exist and trg_count > 0:
+                with open(src_file, 'r') as f:
+                    description = f.read().strip()
 
-            for solution in os.listdir(trg_dir):
-                with open(trg_dir + '/' + solution, 'r') as f:
-                    trg_data.append(f.read().strip())
-    print(len(src_data), len(trg_data))
-    print(src_data[0])
-    print(trg_data[0])
-
+                for solution in os.listdir(trg_dir):
+                    with open(trg_dir + '/' + solution, 'r') as f:
+                        code = f.read().strip()
+                        json.dump({'src':description, 'trg':code}, jsonl_file)
+                        jsonl_file.write('\n')
 
 
 class D2C(datasets.GeneratorBasedBuilder):
@@ -63,13 +61,13 @@ class D2C(datasets.GeneratorBasedBuilder):
         extract_data()
         return [
             datasets.SplitGenerator(
-                name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "test.jsonl")}
+                name=datasets.Split.TEST, gen_kwargs={"filepath": os.path.join(data_dir, "data.jsonl")}
             ),
             datasets.SplitGenerator(
-                name=datasets.Split.VALIDATION, gen_kwargs={"filepath": os.path.join(data_dir, "valid.jsonl")}
+                name=datasets.Split.VALIDATION, gen_kwargs={"filepath": os.path.join(data_dir, "data.jsonl")}
             ),
             datasets.SplitGenerator(
-                name=datasets.Split.TRAIN, gen_kwargs={"filepath": os.path.join(data_dir, "train.jsonl")}
+                name=datasets.Split.TRAIN, gen_kwargs={"filepath": os.path.join(data_dir, "data.jsonl")}
             ),
         ]
 
