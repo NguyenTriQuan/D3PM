@@ -16,12 +16,25 @@ def download_and_unzip():
         # Extract all the contents to the destination folder
         zip_ref.extractall('conditional_data/description2code')
 
+
     print("File extracted successfully.")
 
 def extract_data():
     data_dir = 'conditional_data/description2code/description2code_current/codeforces'
-    for file in os.listdir(data_dir):
-        print(file)
+    src_data = []
+    trg_data = []
+    for prob in os.listdir(data_dir):
+        src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
+        with open(trg_dir + '/' + solution, 'r') as f:
+            src_data.append(f.read().strip())
+
+        trg_dir = data_dir + '/' + prob + '/' + 'solutions_c++'
+        for solution in os.listdir(trg_dir):
+            with open(trg_dir + '/' + solution, 'r') as f:
+                trg_data.append(f.read().strip())
+    print(len(src_data), len(trg_data))
+    print(src_data[0])
+    print(trg_data[0])
 
 
 
