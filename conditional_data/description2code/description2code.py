@@ -25,7 +25,7 @@ def extract_data():
     trg_data = []
     for prob in os.listdir(data_dir):
         print(prob)
-        src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
+        src_file = data_dir + '/' + prob + '/' + 'description/description_annotated.txt'
         with open(src_file, 'r') as f:
             src_data.append(f.read().strip())
 
