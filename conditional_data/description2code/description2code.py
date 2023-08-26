@@ -25,14 +25,19 @@ def extract_data():
     trg_data = []
     for prob in os.listdir(data_dir):
         print(prob)
-        src_file = data_dir + '/' + prob + '/' + 'description/description_annotated.txt'
-        with open(src_file, 'r') as f:
-            src_data.append(f.read().strip())
+        src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
+        src_exist = os.path.isfile(src_file)
+        trg_dir = data_dir + '/' + prob + '/' + 'solutions_python'
+        if os.path.isdir(trg_dir):
+            trg_count = len(os.listdir(trg_dir))
 
-        trg_dir = data_dir + '/' + prob + '/' + 'solutions_c++'
-        for solution in os.listdir(trg_dir):
-            with open(trg_dir + '/' + solution, 'r') as f:
-                trg_data.append(f.read().strip())
+        if src_exist and trg_count > 0:
+            with open(src_file, 'r') as f:
+                src_data.append(f.read().strip())
+
+            for solution in os.listdir(trg_dir):
+                with open(trg_dir + '/' + solution, 'r') as f:
+                    trg_data.append(f.read().strip())
     print(len(src_data), len(trg_data))
     print(src_data[0])
     print(trg_data[0])
