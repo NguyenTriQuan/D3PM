@@ -56,7 +56,7 @@ class D2C(datasets.GeneratorBasedBuilder):
         )
 
     def _split_generators(self, dl_manager):
-        data_dir = 'conditional_data/description2code' 
+        data_dir = 'conditional_data/description2code/description2code_current/codeforces'
         # download_and_unzip()
         extract_data()
         return [
