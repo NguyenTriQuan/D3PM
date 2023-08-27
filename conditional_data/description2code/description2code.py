@@ -70,10 +70,14 @@ def extract_data():
         
         print('\n### Dataset Info: ###\n')
         print('\n### Description: ###\n')
+        print('Total description', num_description)
         print(data['src'])
         print('\n### Solution: ###\n')
+        print('Total solution', avg_solutions_per_description)
+        print('Avg solution per description', avg_solutions_per_description / num_description)
         print(data['trg'])
         print('\n### Test Cases: ###\n')
+        print('Avg Test cases per description', avg_testcases_per_description / num_description)
         print(data['test'])
 
 
