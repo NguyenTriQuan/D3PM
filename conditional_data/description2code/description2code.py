@@ -29,7 +29,7 @@ def extract_data():
             src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
             src_exist = os.path.isfile(src_file)
             samples_dir = data_dir + '/' + prob + '/' + 'samples'
-            samples_exist = os.path.isfile(samples_dir)
+            samples_exist = os.path.isdir(samples_dir)
             trg_dir = data_dir + '/' + prob + '/' + 'solutions_python'
             trg_count = 0
             if os.path.isdir(trg_dir):
