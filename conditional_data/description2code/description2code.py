@@ -34,6 +34,7 @@ def extract_data():
             if os.path.isdir(trg_dir):
                 trg_count = len(os.listdir(trg_dir))
 
+            print(prob, src_exist, samples_exist, trg_count)
             if src_exist and trg_count > 0 and samples_exist:
                 testcases = []
                 for inp in os.listdir(samples_dir):
@@ -68,17 +69,17 @@ def extract_data():
                 num_description += 1
                 avg_testcases_per_description += len(testcases)
         
-        print('\n### Dataset Info: ###\n')
-        print('\n### Description: ###\n')
-        print('Total description', num_description)
-        print(data['src'])
-        print('\n### Solution: ###\n')
-        print('Total solution', avg_solutions_per_description)
-        print('Avg solution per description', avg_solutions_per_description / num_description)
-        print(data['trg'])
-        print('\n### Test Cases: ###\n')
-        print('Avg Test cases per description', avg_testcases_per_description / num_description)
-        print(data['test'])
+    print('\n### Dataset Info: ###\n')
+    print('\n### Description: ###\n')
+    print('Total description', num_description)
+    print(data['src'])
+    print('\n### Solution: ###\n')
+    print('Total solution', avg_solutions_per_description)
+    print('Avg solution per description', avg_solutions_per_description / num_description)
+    print(data['trg'])
+    print('\n### Test Cases: ###\n')
+    print('Avg Test cases per description', avg_testcases_per_description / num_description)
+    print(data['test'])
 
 
 class D2C(datasets.GeneratorBasedBuilder):
