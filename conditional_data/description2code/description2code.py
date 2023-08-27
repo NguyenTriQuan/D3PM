@@ -31,6 +31,7 @@ def extract_data():
             samples_dir = data_dir + '/' + prob + '/' + 'samples'
             samples_exist = os.path.isfile(samples_dir)
             trg_dir = data_dir + '/' + prob + '/' + 'solutions_python'
+            trg_count = 0
             if os.path.isdir(trg_dir):
                 trg_count = len(os.listdir(trg_dir))
 
