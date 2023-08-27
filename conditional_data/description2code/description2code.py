@@ -21,25 +21,60 @@ def download_and_unzip():
 
 def extract_data():
     data_dir = 'conditional_data/description2code/description2code_current/codeforces'
-    data = []
+    num_description = 0
+    avg_solutions_per_description = 0
+    avg_testcases_per_description = 0
     with open('conditional_data/description2code/description2code_current/codeforces/data.jsonl', 'w') as jsonl_file:
         for prob in os.listdir(data_dir):
-            print(prob)
             src_file = data_dir + '/' + prob + '/' + 'description/description.txt'
             src_exist = os.path.isfile(src_file)
+            samples_dir = data_dir + '/' + prob + '/' + 'samples'
+            samples_exist = os.path.isfile(samples_dir)
             trg_dir = data_dir + '/' + prob + '/' + 'solutions_python'
             if os.path.isdir(trg_dir):
                 trg_count = len(os.listdir(trg_dir))
 
-            if src_exist and trg_count > 0:
+            if src_exist and trg_count > 0 and samples_exist:
+                testcases = []
+                for inp in os.listdir(samples_dir):
+                    if 'input' in inp:
+                        with open(samples_dir + '/' + inp, 'r') as f:
+                            inp_test = f.read()
+                        if len(inp_test) > 0:
+                            with open(samples_dir + '/' + inp[:-9] + 'output.txt', 'r') as f:
+                                out_test = f.read()
+                            if len(out_test) > 0:
+                                testcases.append({'input':inp_test, 'output':out_test})
+
+                if len(testcases) == 0: continue
+
                 with open(src_file, 'r') as f:
                     description = f.read().strip()
+                
+                if len(description) == 0: continue
 
                 for solution in os.listdir(trg_dir):
                     with open(trg_dir + '/' + solution, 'r') as f:
                         code = f.read().strip()
-                        json.dump({'src':description, 'trg':code}, jsonl_file)
-                        jsonl_file.write('\n')
+
+                    if len(code) == 0: continue
+                    avg_solutions_per_description += 1
+
+                    data = {'src':description, 'trg':code, 'test': testcases}
+                    json.dump(data, jsonl_file)
+                    jsonl_file.write('\n')
+
+                print(prob, 'successed')
+                num_description += 1
+                avg_testcases_per_description += len(testcases)
+        
+        print('\n### Dataset Info: ###\n')
+        print('\n### Description: ###\n')
+        print(data['src'])
+        print('\n### Solution: ###\n')
+        print(data['trg'])
+        print('\n### Test Cases: ###\n')
+        print(data['test'])
 
 
 class D2C(datasets.GeneratorBasedBuilder):
